@@ -18,6 +18,15 @@ class NumberOperations
     sum
   end
   
+   # Метод 2: Найти количество цифр числа, меньших 3
+ def num_of_cifr_less3
+	count = 0
+    (@number.to_s).chars.map(&:to_i).each do |digit|
+      count += 1 if digit < 3
+    end
+    count
+  end
+  
 
 	
   
