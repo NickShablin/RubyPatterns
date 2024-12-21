@@ -76,4 +76,14 @@ class Student
   def set_git(value)
     @git = value
   end
+
+  # Метод для вывода информации о студенте
+  def to_s
+    info = "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}"
+    info += ", Телефон: #{@phone}" if @phone
+    info += ", Телеграм: #{@telegram}" if @telegram
+    info += ", Почта: #{@email}" if @email
+    info += ", Гит: #{@git}" if @git
+    info
+  end
 end
