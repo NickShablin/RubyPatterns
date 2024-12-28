@@ -2,7 +2,7 @@ class Student
   # Определяем атрибуты с помощью attr_accessor
   attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
 
-  # Конструктор
+  # Конструктор с параметрами по умолчанию
   def initialize(id:, surname:, name:, patronymic:, phone: nil, telegram: nil, email: nil, git: nil)
     @id = id
     @surname = surname
