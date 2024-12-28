@@ -2,16 +2,16 @@ class Student
   # Определяем атрибуты с помощью attr_accessor
   attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
 
-  # Конструктор с параметрами по умолчанию
-  def initialize(id:, surname:, name:, patronymic:, phone: nil, telegram: nil, email: nil, git: nil)
-    @id = id
-    @surname = surname
-    @name = name
-    @patronymic = patronymic
-    @phone = phone
-    @telegram = telegram
-    @email = email
-    @git = git
+  # Конструктор, принимающий хэш
+  def initialize(attributes = {})
+    @id = attributes[:id]
+    @surname = attributes[:surname]
+    @name = attributes[:name]
+    @patronymic = attributes[:patronymic]
+    @phone = attributes[:phone]
+    @telegram = attributes[:telegram]
+    @email = attributes[:email]
+    @git = attributes[:git]
   end
 
   # Метод для вывода информации о студенте
