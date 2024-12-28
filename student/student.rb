@@ -8,10 +8,21 @@ class Student
     @surname = attributes[:surname]
     @name = attributes[:name]
     @patronymic = attributes[:patronymic]
-    @phone = attributes[:phone]
+    self.phone = attributes[:phone]  # Используем сеттер для проверки
     @telegram = attributes[:telegram]
     @email = attributes[:email]
     @git = attributes[:git]
+  end
+
+  # Метод класса для проверки корректности телефонного номера
+  def self.validate_phone(phone)
+    phone.match?(/\A(\+\d{1,3}\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\z/)
+  end
+
+  # Сеттер для phone с проверкой
+  def phone=(value)
+    raise ArgumentError, "Недопустимый номер телефона" unless self.class.validate_phone(value)
+    @phone = value
   end
 
   # Метод для вывода информации о студенте
