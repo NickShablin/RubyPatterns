@@ -1,7 +1,6 @@
 class Student
   # Определяем атрибуты с помощью attr_accessor
-  attr_accessor :phone, :telegram, :email, :git
-  attr_reader :id, :surname, :name, :patronymic
+  attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
 
   # Конструктор
   def initialize(id:, surname:, name:, patronymic:, phone: nil, telegram: nil, email: nil, git: nil)
