@@ -75,6 +75,22 @@ class Student
     @git = value
   end
 
+  # Метод для проверки наличия Git
+  def has_git?
+    !@git.nil? && !@git.empty?
+  end
+
+  # Метод для проверки наличия любого контакта
+  def has_contact?
+    !@phone.nil? || !@telegram.nil? || !@email.nil?
+  end
+
+  # Метод для валидации
+  def validate
+    raise ArgumentError, "Отсутствует Git" unless has_git?
+    raise ArgumentError, "Отсутствует контакт для связи" unless has_contact?
+  end
+
   # Метод для вывода информации о студенте
   def to_s
     info = "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}"
