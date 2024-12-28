@@ -1,6 +1,7 @@
 class Student
   # Определяем атрибуты с помощью attr_accessor
-  attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
+  attr_accessor :id, :surname, :name, :patronymic, :git
+  attr_reader :phone, :telegram, :email
 
   # Конструктор, принимающий хэш
   def initialize(attributes = {})
@@ -75,6 +76,22 @@ class Student
     @git = value
   end
 
+  # Метод для установки контактов
+  def set_contacts(contacts = {})
+    contacts.each do |key, value|
+      case key
+      when :phone
+        self.phone = value  # Используем сеттер для проверки
+      when :telegram
+        self.telegram = value  # Используем сеттер для проверки
+      when :email
+        self.email = value  # Используем сеттер для проверки
+      else
+        raise ArgumentError, "Недопустимый контакт: #{key}"
+      end
+    end
+  end
+
   # Метод для проверки наличия Git
   def has_git?
     !@git.nil? && !@git.empty?
@@ -100,4 +117,3 @@ class Student
     info += ", Гит: #{@git}" if @git
     info
   end
-end
