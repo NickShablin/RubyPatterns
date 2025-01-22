@@ -1,3 +1,5 @@
+require_relative 'base_student.rb'
+
 class Student < BaseStudent
   attr_accessor :id, :surname, :name, :patronymic, :git
   attr_reader :phone, :telegram, :email
