@@ -1,18 +1,16 @@
-class Student
-  # Определяем атрибуты с помощью attr_accessor
+class Student < BaseStudent
   attr_accessor :id, :surname, :name, :patronymic, :git
   attr_reader :phone, :telegram, :email
 
   # Конструктор, принимающий хэш
   def initialize(attributes = {})
-    @id = attributes[:id]
+    super(id: attributes[:id], git: attributes[:git])
     self.surname = attributes[:surname]
     self.name = attributes[:name]
     self.patronymic = attributes[:patronymic]
     self.phone = attributes[:phone]  # Используем сеттер для проверки
     self.telegram = attributes[:telegram]
     self.email = attributes[:email]
-    self.git = attributes[:git]
   end
 
   # Новый конструктор, принимающий строку
