@@ -1,53 +1,55 @@
-require_relative 'student'
+require_relative 'base_student'
 
-class Student_short
-  attr_reader :id, :surname_initials, :git, :contact
+class Student_short < BaseStudent
+  attr_reader :surname_initials, :contact
 
-  # Конструктор, принимающий объект класса Student
-  def initialize(student)
-    @id = student.id
-    @surname_initials = "#{student.surname} #{student.name[0]}.#{student.patronymic ? " #{student.patronymic[0]}." : ''}"
-    @git = student.git
-    @contact = student.get_contact_info
-  end
-
-  # Конструктор, принимающий ID и строку с информацией
-  def self.create_from_string(id, student_string)
-    parts = student_string.split(',').map(&:strip)
-
-    raise ArgumentError, "Недостаточно данных для создания студента" if parts.size < 5
-
-    surname, name, patronymic = parts[0].split(' ')
-    phone = parts[1]
-    telegram = parts[2]
-    email = parts[3]
-    git = parts[4]
-
-    # Создаем временный объект Student для извлечения данных
-    temp_student = Student.new(
-      surname: surname,
-      name: name,
-      patronymic: patronymic,
-      phone: phone,
-      telegram: telegram,
-      email: email,
-      git: git
+  def self.create_from_student(student)
+    new(
+      id: student.id, 
+      git: student.git, 
+      surname_initials: "#{student.surname} #{student.name[0]}.#{student.patronymic ? " #{student.patronymic[0]}." : ''}", 
+      contact: student.get_contact_info
     )
-
-    # Используем первый конструктор
-    new(temp_student)
   end
 
-  # Метод для получения краткой информации о студенте
-  def getInfo
-    "ID: #{@id}, ФИО: #{@surname_initials}, Git: #{@git || 'нет'}, Контакт: #{@contact || 'нет'}"
+  def ==(other)
+    return false unless other.is_a?(Student_short)
+    self.contact == other.contact
+  end
+
+  def self.create_from_string(string)
+    attributes = {}
+
+    string.split(', ').each do |pair|
+      key, value = pair.split(': ')
+      attributes[key] = value
+    end
+
+    new(
+      id: attributes['ID'],
+      git: attributes['Git'],
+      surname_initials: attributes['ФИО'],
+      contact: attributes['Тел'] || attributes['Телеграм'] || attributes['Почта'] || nil
+    )
   end
 
   def to_s
-    getInfo
+    "ID: #{@id}, ФИО: #{@surname_initials} Git: #{@git ? @git : 'нет'} Контакт: #{@contact ? @contact : 'нет'} "
   end
 
+  def to_h
+    { id: @id, surname_initials: @surname_initials, git: @git, contact: @contact }
+  end
+  
   def has_contact?
     !@contact.nil?
+  end
+
+  private_class_method :new
+  
+  def initialize(id:, git:, surname_initials:, contact: nil)
+    super(id: id, git: git)
+    @surname_initials = surname_initials
+    @contact = contact
   end
 end
