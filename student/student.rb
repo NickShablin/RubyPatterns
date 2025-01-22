@@ -58,11 +58,6 @@ class Student < BaseStudent
   end
 
 
-  def self.validate_git(git)
-    git.match?(/\Ahttps?:\/\/github\.com\/[\w\-]+\z/)
-  end
-
-
   def surname=(value)
     raise ArgumentError, "Недопустимая фамилия" unless self.class.validate_name(value)
     @surname = value
@@ -93,10 +88,6 @@ class Student < BaseStudent
     @email = value
   end
 
-  def git=(value)
-    raise ArgumentError, "Недопустимый Git" unless self.class.validate_git(value)
-    @git = value
-  end
 
 
   def set_contacts(contacts = {})
