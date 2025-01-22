@@ -17,13 +17,13 @@ class Student
 
   # Новый конструктор, принимающий строку
   def self.from_string(student_string)
-    # Разделение строки
+    # Разделяем строку на части
     parts = student_string.split(',').map(&:strip)
 
     # Проверка, что строка содержит как минимум 5 частей
     raise ArgumentError, "Недостаточно данных для создания студента" if parts.size < 5
 
-    # Парсинг
+    # Извлечение данные
     surname, name, patronymic = parts[0].split(' ')
     phone = parts[1]
     telegram = parts[2]
@@ -108,9 +108,9 @@ class Student
     contacts.each do |key, value|
       case key
       when :phone
-        self.phone = value  # сеттер для проверки
+        self.phone = value  # Сеттер для проверки
       when :telegram
-        self.telegram = value 
+        self.telegram = value  
       when :email
         self.email = value  
       else
@@ -143,5 +143,48 @@ class Student
     info += ", Почта: #{@email}" if @email
     info += ", Гит: #{@git}" if @git
     info
+  end
+
+  # Метод для получения краткой информации о студенте
+  def getInfo
+    contact_info = if @phone
+                     "Телефон: #{@phone}"
+                   elsif @telegram
+                     "Telegram: #{@telegram}"
+                   elsif @email
+                     "Email: #{@email}"
+                   else
+                     "Нет контактной информации"
+                   end
+
+    "#{@surname} #{initials} | Гит: #{@git || 'Нет'} | #{contact_info}"
+  end
+
+  # Метод для получения инициалов
+  def initials
+    "#{@name[0]}.#{@patronymic[0]}."
+  end
+
+  # Метод для получения фамилии
+  def get_surname
+    @surname
+  end
+
+  # Метод для получения ссылки на Git
+  def get_git
+    @git
+  end
+
+  # Метод для получения контактной информации
+  def get_contact_info
+    if @phone
+      @phone
+    elsif @telegram
+      @telegram
+    elsif @email
+      @email
+    else
+      "Нет контактной информации"
+    end
   end
 end
