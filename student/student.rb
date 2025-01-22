@@ -15,6 +15,33 @@ class Student
     self.git = attributes[:git]
   end
 
+  # Новый конструктор, принимающий строку
+  def self.from_string(student_string)
+    # Разделение строки
+    parts = student_string.split(',').map(&:strip)
+
+    # Проверка, что строка содержит как минимум 5 частей
+    raise ArgumentError, "Недостаточно данных для создания студента" if parts.size < 5
+
+    # Парсинг
+    surname, name, patronymic = parts[0].split(' ')
+    phone = parts[1]
+    telegram = parts[2]
+    email = parts[3]
+    git = parts[4]
+
+    # Вызов стандартного конструктора с параметрами
+    new(
+      surname: surname,
+      name: name,
+      patronymic: patronymic,
+      phone: phone,
+      telegram: telegram,
+      email: email,
+      git: git
+    )
+  end
+
   # Метод класса для проверки корректности телефонного номера
   def self.validate_phone(phone)
     phone.match?(/\A(\+\d{1,3}\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\z/)
@@ -81,11 +108,11 @@ class Student
     contacts.each do |key, value|
       case key
       when :phone
-        self.phone = value  # Используем сеттер для проверки
+        self.phone = value  # сеттер для проверки
       when :telegram
-        self.telegram = value  # Используем сеттер для проверки
+        self.telegram = value 
       when :email
-        self.email = value  # Используем сеттер для проверки
+        self.email = value  
       else
         raise ArgumentError, "Недопустимый контакт: #{key}"
       end
@@ -117,3 +144,4 @@ class Student
     info += ", Гит: #{@git}" if @git
     info
   end
+end
