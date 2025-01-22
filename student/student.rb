@@ -23,7 +23,7 @@ class Student
     # Проверка, что строка содержит как минимум 5 частей
     raise ArgumentError, "Недостаточно данных для создания студента" if parts.size < 5
 
-    # Извлечение данные
+    # Извлечение данных
     surname, name, patronymic = parts[0].split(' ')
     phone = parts[1]
     telegram = parts[2]
@@ -163,11 +163,6 @@ class Student
   # Метод для получения инициалов
   def initials
     "#{@name[0]}.#{@patronymic[0]}."
-  end
-
-  # Метод для получения фамилии
-  def get_surname
-    @surname
   end
 
   # Метод для получения ссылки на Git
