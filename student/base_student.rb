@@ -6,7 +6,7 @@ class BaseStudent
     self.git = git if !git.nil?
   end
 
-  # Validators for setters
+  
   def self.validate_git(git)
     git.match?(/\Ahttps:\/\/github\.com\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/)
   end  
@@ -15,7 +15,7 @@ class BaseStudent
     id.match?(/^\d+$/)
   end
 
-  # Setters
+
   def id=(id)
     if BaseStudent.valid_id(id)
       @id = id
@@ -36,7 +36,7 @@ class BaseStudent
     !@git.nil? && !@git.empty?
   end
 
-  protected # кастуем щиты от чужих
+  protected
   def git=(git)
     if BaseStudent.validate_git(git)
       @git = git
