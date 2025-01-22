@@ -10,7 +10,8 @@ class Student_short
   end
 
   def self.create_from_student(student)
-    new("#{student.surname} #{student.name[0]}. #{student.patronymic[0]}.", student.has_contact? ? student.get_contact : nil)
+    contact = student.has_contact? ? student.get_info : nil
+    new("#{student.surname} #{student.name[0]}. #{student.patronymic[0]}.", contact)
   end
 
   def self.create_from_string(string)
@@ -29,7 +30,6 @@ class Student_short
   def has_contact?
     !@contact.nil? && !@contact.empty?
   end
-
 
   def equal_to?(other)
     other.is_a?(Student_short) && @contact == other.contact

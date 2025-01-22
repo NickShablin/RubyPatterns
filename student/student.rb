@@ -38,6 +38,11 @@ class Student < BaseStudent
   end
 
 
+  def self.validate_fio(name)
+    name.match?(/^[a-zA-Zа-яА-Я\s]+$/)
+  end
+
+
   def self.validate_phone(phone)
     phone.match?(/\A(\+\d{1,3}\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\z/)
   end
@@ -73,6 +78,9 @@ class Student < BaseStudent
     @patronymic = value
   end
 
+
+  private
+
   def phone=(value)
     raise ArgumentError, "Недопустимый номер телефона" unless self.class.validate_phone(value)
     @phone = value
@@ -88,7 +96,7 @@ class Student < BaseStudent
     @email = value
   end
 
-
+  public
 
   def set_contacts(contacts = {})
     contacts.each do |key, value|
