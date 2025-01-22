@@ -81,24 +81,6 @@ class Student < BaseStudent
   end
 
 
-  private
-
-  def phone=(value)
-    raise ArgumentError, "Недопустимый номер телефона" unless self.class.validate_phone(value)
-    @phone = value
-  end
-
-  def telegram=(value)
-    raise ArgumentError, "Недопустимый Telegram" unless self.class.validate_telegram(value)
-    @telegram = value
-  end
-
-  def email=(value)
-    raise ArgumentError, "Недопустимый email" unless self.class.validate_email(value)
-    @email = value
-  end
-
-  public
 
   def set_contacts(contacts = {})
     contacts.each do |key, value|
@@ -130,5 +112,23 @@ class Student < BaseStudent
   def to_s
     "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}, " \
     "Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Git: #{@git}"
+  end
+
+  
+  private
+
+  def phone=(value)
+    raise ArgumentError, "Недопустимый номер телефона" unless self.class.validate_phone(value)
+    @phone = value
+  end
+
+  def telegram=(value)
+    raise ArgumentError, "Недопустимый Telegram" unless self.class.validate_telegram(value)
+    @telegram = value
+  end
+
+  def email=(value)
+    raise ArgumentError, "Недопустимый email" unless self.class.validate_email(value)
+    @email = value
   end
 end
