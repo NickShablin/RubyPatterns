@@ -6,7 +6,6 @@ class BaseStudent
     self.git = git if !git.nil?
   end
 
-  
   def self.validate_git(git)
     git.match?(/\Ahttps:\/\/github\.com\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/)
   end  
@@ -14,7 +13,6 @@ class BaseStudent
   def self.valid_id(id)
     id.match?(/^\d+$/)
   end
-
 
   def id=(id)
     if BaseStudent.valid_id(id)
@@ -44,4 +42,4 @@ class BaseStudent
       raise ArgumentError, "Неправильно введен git"
     end
   end
-end
+end 

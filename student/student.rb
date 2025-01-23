@@ -1,10 +1,10 @@
-require_relative 'base_student.rb'
+require_relative 'C:\Users\sl1pp\OneDrive\Документы\GitHub\RubyPatterns\base_student'
 
 class Student < BaseStudent
-  attr_accessor :id, :surname, :name, :patronymic, :git
+  attr_accessor :surname, :name, :patronymic, :git
   attr_reader :phone, :telegram, :email
 
-  # Конструктор, принимающий хэш
+
   def initialize(attributes = {})
     super(id: attributes[:id], git: attributes[:git])
     self.surname = attributes[:surname]
@@ -15,20 +15,17 @@ class Student < BaseStudent
     self.email = attributes[:email]
   end
 
-
   def self.from_string(student_string)
     parts = student_string.split(',').map(&:strip)
 
-    raise ArgumentError, "Недостаточно данных для создания студента" if parts.size < 5
+    raise ArgumentError, "Недостаточно данных для создания студента" if parts.size < 8
 
-    surname, name, patronymic = parts[0].split(' ')
-    phone = parts[1]
-    telegram = parts[2]
-    email = parts[3]
-    git = parts[4]
+    id, surname, name, patronymic, phone, telegram, email, git = parts
+
+    raise ArgumentError, "Фамилия и имя не могут быть пустыми" if surname.empty? || name.empty?
 
     new(
-      id: nil,  
+      id: id,
       surname: surname,
       name: name,
       patronymic: patronymic,
@@ -40,18 +37,13 @@ class Student < BaseStudent
   end
 
 
-  def self.validate_fio(name)
-    name.match?(/^[a-zA-Zа-яА-Я\s]+$/)
+  def self.validate_name(name)
+    name.match?(/\A[а-яА-ЯёЁa-zA-Z\s-]+\z/)
   end
 
 
   def self.validate_phone(phone)
     phone.match?(/\A(\+\d{1,3}\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\z/)
-  end
-
-
-  def self.validate_name(name)
-    name.match?(/\A[а-яА-ЯёЁa-zA-Z\s-]+\z/)
   end
 
 
@@ -63,7 +55,6 @@ class Student < BaseStudent
   def self.validate_telegram(telegram)
     telegram.match?(/\A@\w+\z/)
   end
-
 
   def surname=(value)
     raise ArgumentError, "Недопустимая фамилия" unless self.class.validate_name(value)
@@ -80,8 +71,6 @@ class Student < BaseStudent
     @patronymic = value
   end
 
-
-
   def set_contacts(contacts = {})
     contacts.each do |key, value|
       case key
@@ -97,14 +86,12 @@ class Student < BaseStudent
     end
   end
 
-
   def has_contact?
     !@phone.nil? || !@telegram.nil? || !@email.nil?
   end
 
- 
   def get_info
-    "ID: #{@id}, ФИО: #{@surname} #{@name[0]}.#{@patronymic ? " #{@patronymic[0]}." : ''}, " \
+    " ID: #{@id}, ФИО: #{@surname} #{@name[0]}.#{@patronymic ? " #{@patronymic[0]}." : ''}, " \
     "Телефон: #{@phone || 'нет'}, Телеграм: #{@telegram || 'нет'}, " \
     "Почта: #{@email || 'нет'}, Git: #{@git || 'нет'}"
   end
@@ -114,7 +101,6 @@ class Student < BaseStudent
     "Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Git: #{@git}"
   end
 
-  
   private
 
   def phone=(value)
