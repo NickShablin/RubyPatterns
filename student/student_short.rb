@@ -13,25 +13,15 @@ class StudentShort < BaseStudent
 
 
   def self.create_from_student(student)
-    surname_initials = "#{student.surname} #{student.name[0]}.#{student.patronymic ? " #{student.patronymic[0]}." : ''}"
-    contact = student.has_contact? ? student.get_info : nil
-    new(id: student.id, git: student.git, surname_initials: surname_initials, contact: contact)
+    new(id: student.id, git: student.git, surname_initials: student.surname_initials, contact: student.contact)
   end
 
 
   def self.create_from_string(string)
-    parts = string.split(',').map(&:strip)
+    surname_initials, contact, git = string.split(', ')
+    return surname_initials, contact, git
+  end  
 
-    raise ArgumentError, "Недостаточно данных для создания StudentShort" if parts.size < 4
-
-    id, git, surname_initials, contact = parts
-    new(
-      id: id,
-      git: git,
-      surname_initials: surname_initials,
-      contact: contact
-    )
-  end
 
   def to_s
     "ID: #{@id}, ФИО: #{@surname_initials}, Git: #{@git || 'нет'}, Контакт: #{@contact || 'нет'}"
