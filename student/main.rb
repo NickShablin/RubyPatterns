@@ -2,7 +2,8 @@ require_relative 'student'
 require_relative 'student_short'
 
 def main
-  student_string = "1, Иванов Иван Иванович, +71234567890, @ivanov, ivanov@gmail.com, https://github.com/ivanov"
+  # Исправленная строка: 8 элементов, разделённых запятыми.
+  student_string = "1, Иванов, Иван, Иванович, +71234567890, @ivanov, ivanov@gmail.com, https://github.com/ivanov/my_repo.git"
   
   begin
     student = Student.from_string(student_string)
@@ -23,11 +24,9 @@ def main
     puts "Гит: #{student_short.git}"
     puts "Контакт: #{student_short.contact}"
 
-    student_short_from_string = StudentShort.create_from_string(student_string)
-    puts "\nИнформация о StudentShort из строки:"
-    puts student_short_from_string.to_s
-
   rescue ArgumentError => e
     puts "Ошибка: #{e.message}"
   end
 end
+
+main
