@@ -1,6 +1,5 @@
 require_relative 'array_processing'
 
-# Функция для проверки равенства и вывода сообщения
 def assert_equal(expected, actual, message = "")
   if expected == actual
     puts "Тест пройден: #{message}"
@@ -9,7 +8,7 @@ def assert_equal(expected, actual, message = "")
   end
 end
 
-# Тестирование метода any?
+
 def test_any
   processor = ArrayProcessor.new([1, 2, 3, 4, 5])
   
@@ -20,7 +19,6 @@ def test_any
   assert_equal(false, result, "any? возвращает false, если нет элемента больше 5")
 end
 
-# Тестирование метода find_all
 def test_find_all
   processor = ArrayProcessor.new([1, 2, 3, 4, 5])
   
@@ -31,10 +29,21 @@ def test_find_all
   assert_equal([], result, "find_all возвращает пустой массив, если нет элементов больше 5")
 end
 
+def test_find_index
+  processor = ArrayProcessor.new([1, 2, 3, 4, 5])
+  
+  result = processor.find_index { |n| n == 3 }
+  assert_equal(2, result, "find_index возвращает индекс элемента 3 (индексация с 0)")
+  
+  result = processor.find_index { |n| n > 5 }
+  assert_equal(nil, result, "find_index возвращает nil, если ни один элемент не удовлетворяет условию")
+end
+
 def run_tests
   puts "Запуск тестов для ArrayProcessor..."
   test_any
   test_find_all
+  test_find_index
   
 end
 

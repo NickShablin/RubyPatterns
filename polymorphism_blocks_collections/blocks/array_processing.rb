@@ -4,10 +4,10 @@ class ArrayProcessor
     @array = array.dup.freeze
   end
 
-  # Возвращает копию массива
   def elements
     @array.dup
   end
+
 
   # any? – возвращает true, если блок возвращает true для хотя бы одного элемента
   def any?
@@ -18,7 +18,7 @@ class ArrayProcessor
     false
   end
 
-    # find_all – возвращает массив всех элементов, для которых блок возвращает true
+  # find_all – возвращает массив всех элементов, для которых блок возвращает true
   def find_all
     raise LocalJumpError, "не передан блок" unless block_given?
     result = []
@@ -26,5 +26,16 @@ class ArrayProcessor
       result << elem if yield(elem)
     end
     result
+  end
+
+  # find_index – возвращает индекс первого элемента, для которого блок возвращает true, или nil, если ни один элемент не подходит
+  def find_index
+    raise LocalJumpError, "не передан блок" unless block_given?
+    index = 0
+    for elem in @array
+      return index if yield(elem)
+      index += 1
+    end
+    nil
   end
 end
