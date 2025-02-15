@@ -10,7 +10,7 @@ def show_result(original, result, message)
   puts result
 end
 
-puts "Выберите задачу (1-2):"
+puts "Выберите задачу (1-3):"
 choice = gets.chomp
 
 array = read_array
@@ -21,7 +21,10 @@ when '1'
   message = "Перевернутые элементы между min и max"
 when '2'
   result = two_largest_elements(array)
-  message = "Два наибольних элемента: "
+  message = "Два наибольших элемента:"
+when '3'
+  result = max_odd_element(array)
+  message = "Максимальный нечетный элемент:"
 else
   puts "Некорректный выбор"
   exit

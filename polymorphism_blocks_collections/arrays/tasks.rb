@@ -9,9 +9,13 @@ def reverse_between_min_max(arr)
   arr[0..start] + arr[start+1...finish].reverse + arr[finish..-1]
 end
 
-# 1.24: Дан целочисленный массив. Необходимо найти два наибольших элемента.
+# 1.24 Дан целочисленный массив. Необходимо найти два наибольших элемента.
 def two_largest_elements(arr)
   return [] if arr.empty?
   arr.max(2)
 end
 
+# 1.36 Дан целочисленный массив. Необходимо найти максимальный нечетный элемент.
+def max_odd_element(arr)
+  arr.select(&:odd?).max
+end
