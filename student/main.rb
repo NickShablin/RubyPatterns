@@ -1,5 +1,5 @@
-require_relative 'C:\Users\sl1pp\OneDrive\Документы\GitHub\RubyPatterns\student'
-require_relative 'C:\Users\sl1pp\OneDrive\Документы\GitHub\RubyPatterns\student_short'
+require_relative 'student'
+require_relative 'student_short'
 
 def main
   student_string = "1, Иванов Иван Иванович, +71234567890, @ivanov, ivanov@gmail.com, https://github.com/ivanov"

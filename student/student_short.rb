@@ -1,4 +1,4 @@
-require_relative 'C:\Users\sl1pp\OneDrive\Документы\GitHub\RubyPatterns\base_student'
+require_relative 'base_student'
 
 class StudentShort < BaseStudent
   attr_reader :surname_initials, :contact
