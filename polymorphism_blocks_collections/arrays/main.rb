@@ -1,35 +1,30 @@
 require_relative 'tasks'
 
-puts "Выберите задачу (1):"
+def read_array
+  File.read('array.txt').split.map(&:to_i)
+end
+
+def show_result(original, result, message)
+  puts "\nИсходный массив: #{original}"
+  puts message if message
+  puts result
+end
+
+puts "Выберите задачу (1-2):"
 choice = gets.chomp
+
+array = read_array
 
 case choice
 when '1'
-  begin
-    array = File.read('array.txt').chomp.split.map(&:to_i)
-    
-    if array.empty?
-      puts "Ошибка: Пустой массив в файле"
-      exit
-    end
-
-    data = reverse_between_min_max(array)
-    
-    puts "\nИсходный массив: #{array.inspect}"
-    puts "Результат: #{data[:result].inspect}"
-    
-    if data[:start_idx] + 1 < data[:end_idx]
-      puts "Перевёрнуты элементы между #{array[data[:start_idx]]} (индекс #{data[:start_idx]})" 
-           "и #{array[data[:end_idx]]} (индекс #{data[:end_idx]})"
-    else
-      puts "Нет элементов для переворота между экстремумами"
-    end
-
-  rescue Errno::ENOENT
-    puts "Ошибка: Файл array.txt не найден"
-  rescue ArgumentError
-    puts "Ошибка: Некорректные данные в файле"
-  end
+  result = reverse_between_min_max(array)
+  message = "Перевернутые элементы между min и max"
+when '2'
+  result = two_largest_elements(array)
+  message = "Два наибольних элемента: "
 else
-  puts "Некорректный выбор. Доступна только задача 1"
+  puts "Некорректный выбор"
+  exit
 end
+
+show_result(array.inspect, result.inspect, message)
