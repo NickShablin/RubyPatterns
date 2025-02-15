@@ -50,12 +50,23 @@ def test_min_max
   assert_equal([nil, nil], result, "min_max возвращает [nil, nil] для пустого массива")
 end
 
+def test_none
+  processor = ArrayProcessor.new([1, 2, 3, 4, 5])
+  
+  result = processor.none? { |n| n < 0 }
+  assert_equal(true, result, "none? возвращает true, если ни один элемент не меньше 0")
+  
+  result = processor.none? { |n| n.even? }
+  assert_equal(false, result, "none? возвращает false, если хотя бы один элемент четный")
+end
+
 def run_tests
   puts "Запуск тестов для ArrayProcessor..."
   test_any
   test_find_all
   test_find_index
   test_min_max
+  test_none
   
 end
 

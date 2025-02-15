@@ -50,4 +50,13 @@ class ArrayProcessor
     end
     [min, max]
   end
+
+   # none? – возвращает true, если блок для ни одного элемента не возвращает true, иначе false
+   def none?
+    raise LocalJumpError, "не передан блок" unless block_given?
+    for elem in @array
+      return false if yield(elem)
+    end
+    true
+  end
 end
