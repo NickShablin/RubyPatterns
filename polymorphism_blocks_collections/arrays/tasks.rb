@@ -27,3 +27,12 @@ def indices_of_most_frequent(arr)
   most_freq_element, _ = freq.max_by { |_, v| v.size }
   arr.each_index.select { |i| arr[i] == most_freq_element }
 end
+
+# 1.60 Дан список. Построить массив из элементов, делящихся на свой номер (номер считается по порядку, начиная с 1) и встречающихся в исходном массиве 1 раз.
+def unique_elements_divisible_by_position(arr)
+  return [] if arr.empty?
+  freq = arr.tally
+  arr.map.with_index { |elem, index| { elem: elem, pos: index + 1 } }
+     .select { |h| freq[h[:elem]] == 1 && h[:elem] % h[:pos] == 0 }
+     .map { |h| h[:elem] }
+end

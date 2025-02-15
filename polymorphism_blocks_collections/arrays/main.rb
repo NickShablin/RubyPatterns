@@ -15,11 +15,10 @@ def show_result(original, result, message)
   puts result
 end
 
-puts "Выберите задачу (1-4):"
+puts "Выберите задачу (1-5):"
 choice = gets.chomp
 
-# Для задачи 1.48 (вариант '4') список вводится пользователем, для остальных – читается из файла.
-array = choice == '4' ? read_array_from_user : read_array_from_file
+array = ['4', '5'].include?(choice) ? read_array_from_user : read_array_from_file
 
 case choice
 when '1'
@@ -34,6 +33,9 @@ when '3'
 when '4'
   result = indices_of_most_frequent(array)
   message = "Индексы наиболее часто повторяющегося элемента:"
+when '5'
+  result = unique_elements_divisible_by_position(array)
+  message = "Элементы, делящиеся на свой номер и встречающиеся 1 раз:"
 else
   puts "Некорректный выбор"
   exit
