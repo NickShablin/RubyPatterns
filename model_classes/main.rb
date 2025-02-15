@@ -1,4 +1,5 @@
 require_relative 'data_table'
+require_relative 'data_list'
 
 table_data = [
   [1, "Alice", [10, 20], { active: true }],
@@ -7,6 +8,14 @@ table_data = [
 ]
 
 data_table = DataTable.new(table_data)
+
+data_list = DataList.new(table_data)
+
+puts "Количество элементов: #{data_list.size}"
+
+(0...data_list.size).each do |i|
+  puts "Элемент с индексом #{i}: #{data_list.element(i).inspect}"
+end
 
 puts "Количество строк: #{data_table.rows_count}"
 puts "Количество столбцов: #{data_table.cols_count}"
