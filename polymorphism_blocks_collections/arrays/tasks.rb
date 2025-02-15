@@ -19,3 +19,11 @@ end
 def max_odd_element(arr)
   arr.select(&:odd?).max
 end
+
+# 1.48 Для введенного списка построить список с номерами элемента, который повторяется наибольшее число раз.
+def indices_of_most_frequent(arr)
+  return [] if arr.empty?
+  freq = arr.group_by { |x| x }
+  most_freq_element, _ = freq.max_by { |_, v| v.size }
+  arr.each_index.select { |i| arr[i] == most_freq_element }
+end
