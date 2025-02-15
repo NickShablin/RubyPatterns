@@ -8,8 +8,6 @@ class ArrayProcessor
     @array.dup
   end
 
-
-  # any? – возвращает true, если блок возвращает true для хотя бы одного элемента
   def any?
     raise LocalJumpError, "не передан блок" unless block_given?
     for elem in @array
@@ -18,7 +16,6 @@ class ArrayProcessor
     false
   end
 
-  # find_all – возвращает массив всех элементов, для которых блок возвращает true
   def find_all
     raise LocalJumpError, "не передан блок" unless block_given?
     result = []
@@ -28,7 +25,6 @@ class ArrayProcessor
     result
   end
 
-  # find_index – возвращает индекс первого элемента, для которого блок возвращает true, или nil, если ни один элемент не подходит
   def find_index
     raise LocalJumpError, "не передан блок" unless block_given?
     index = 0
@@ -39,7 +35,7 @@ class ArrayProcessor
     nil
   end
 
-  # min_max – возвращает массив вида [минимальный, максимальный] элемент.
+
   def min_max
     return [nil, nil] if @array.empty?
     min = @array[0]
@@ -51,12 +47,32 @@ class ArrayProcessor
     [min, max]
   end
 
-   # none? – возвращает true, если блок для ни одного элемента не возвращает true, иначе false
    def none?
     raise LocalJumpError, "не передан блок" unless block_given?
     for elem in @array
       return false if yield(elem)
     end
     true
+  end
+
+  def reduce(initial = nil)
+    raise LocalJumpError, "не передан блок" unless block_given?
+    if initial.nil?
+      raise "Empty array" if @array.empty?
+      accumulator = @array[0]
+      index = 1
+      while index < @array.size
+        accumulator = yield(accumulator, @array[index])
+        index += 1
+      end
+    else
+      accumulator = initial
+      index = 0
+      while index < @array.size
+        accumulator = yield(accumulator, @array[index])
+        index += 1
+      end
+    end
+    accumulator
   end
 end

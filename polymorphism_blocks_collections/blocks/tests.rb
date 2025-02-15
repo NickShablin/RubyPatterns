@@ -60,6 +60,23 @@ def test_none
   assert_equal(false, result, "none? возвращает false, если хотя бы один элемент четный")
 end
 
+def test_reduce
+  processor = ArrayProcessor.new([1, 2, 3, 4, 5])
+  
+  result = processor.reduce(1) { |acc, n| acc * n }
+  assert_equal(120, result, "reduce с начальным значением 1 и умножением элементов возвращает 120")
+  
+  result = processor.reduce { |acc, n| acc + n } 
+  assert_equal(15, result, "reduce без начального значения возвращает сумму элементов 15")
+  
+  begin
+    ArrayProcessor.new([]).reduce { |acc, n| acc + n }
+    raise "Тест не пройден: reduce без начального значения для пустого массива должен выбрасывать исключение"
+  rescue => e
+    puts "Тест пройден: reduce без начального значения для пустого массива выбрасывает исключение"
+  end
+end
+
 def run_tests
   puts "Запуск тестов для ArrayProcessor..."
   test_any
@@ -67,6 +84,7 @@ def run_tests
   test_find_index
   test_min_max
   test_none
+  test_reduce
   
 end
 
