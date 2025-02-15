@@ -39,11 +39,23 @@ def test_find_index
   assert_equal(nil, result, "find_index возвращает nil, если ни один элемент не удовлетворяет условию")
 end
 
+def test_min_max
+  processor = ArrayProcessor.new([1, 2, 3, 4, 5])
+  
+  result = processor.min_max
+  assert_equal([1, 5], result, "min_max возвращает [1, 5] для массива [1,2,3,4,5]")
+  
+  empty_processor = ArrayProcessor.new([])
+  result = empty_processor.min_max
+  assert_equal([nil, nil], result, "min_max возвращает [nil, nil] для пустого массива")
+end
+
 def run_tests
   puts "Запуск тестов для ArrayProcessor..."
   test_any
   test_find_all
   test_find_index
+  test_min_max
   
 end
 

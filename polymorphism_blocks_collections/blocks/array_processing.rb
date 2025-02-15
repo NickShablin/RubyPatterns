@@ -38,4 +38,16 @@ class ArrayProcessor
     end
     nil
   end
+
+  # min_max – возвращает массив вида [минимальный, максимальный] элемент.
+  def min_max
+    return [nil, nil] if @array.empty?
+    min = @array[0]
+    max = @array[0]
+    for elem in @array
+      min = elem if elem < min
+      max = elem if elem > max
+    end
+    [min, max]
+  end
 end
