@@ -16,8 +16,7 @@ class DataList
     @data.dup
   end
 
-
-  # выделить элемент по номеру 
+  # (a) Выделить элемент по номеру (номер в 1-индексации)
   def select(number)
     index = number - 1
     if index < 0 || index >= @data.size
@@ -27,26 +26,23 @@ class DataList
     self
   end
 
-  # получить массив id выделенных элементов 
+  # (b) Получить массив id выделенных элементов (id = порядковый номер, т.е. индекс + 1)
   def get_selected
     @selected_indices.map { |i| i + 1 }
   end
 
-  # получить массив наименований атрибутов, кроме ID.
+  # (c) Получить массив наименований атрибутов, кроме ID.
   def get_names
     raise NotImplementedError, "Метод get_names должен быть реализован в наследниках"
   end
 
-  # получить объект класса DataTable, где нулевой столбец – сгенерированный номер по порядку,
-  # а остальные столбцы – ВСЕ атрибуты сущности, кроме ID.
-  # Этот метод не реализуется в базовом классе.
+  # (d) Получить объект DataTable, где 0 столбец – сгенерированный номер по порядку,
   def get_data
     raise NotImplementedError, "Метод get_data должен быть реализован в наследниках"
   end
 
   private
 
-  # Рекурсивное глубокое копирование массива
   def deep_dup(obj)
     if obj.is_a?(Array)
       obj.map { |e| deep_dup(e) }

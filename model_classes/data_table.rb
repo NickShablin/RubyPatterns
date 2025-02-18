@@ -1,9 +1,7 @@
 class DataTable
-
   def initialize(data)
     @data = deep_dup(data).freeze
   end
-
 
   def element(row, col)
     elem = @data[row][col]
@@ -14,11 +12,9 @@ class DataTable
     end
   end
 
-
   def rows_count
     @data.size
   end
-
 
   def cols_count
     @data.empty? ? 0 : @data.first.size
