@@ -1,5 +1,4 @@
 class ArrayProcessor
-
   def initialize(array)
     @array = array.dup.freeze
   end
@@ -35,7 +34,6 @@ class ArrayProcessor
     nil
   end
 
-
   def min_max
     return [nil, nil] if @array.empty?
     min = @array[0]
@@ -47,7 +45,7 @@ class ArrayProcessor
     [min, max]
   end
 
-   def none?
+  def none?
     raise LocalJumpError, "не передан блок" unless block_given?
     for elem in @array
       return false if yield(elem)
@@ -57,22 +55,15 @@ class ArrayProcessor
 
   def reduce(initial = nil)
     raise LocalJumpError, "не передан блок" unless block_given?
-    if initial.nil?
-      raise "Empty array" if @array.empty?
-      accumulator = @array[0]
-      index = 1
-      while index < @array.size
-        accumulator = yield(accumulator, @array[index])
-        index += 1
-      end
-    else
-      accumulator = initial
-      index = 0
-      while index < @array.size
-        accumulator = yield(accumulator, @array[index])
-        index += 1
-      end
+    raise "Пустой массив" if @array.empty? && initial.nil?
+
+    accumulator = initial || @array.first
+    start_index = initial.nil? ? 1 : 0
+
+    @array.drop(start_index).each do |element|
+      accumulator = yield(accumulator, element)
     end
+
     accumulator
   end
 end

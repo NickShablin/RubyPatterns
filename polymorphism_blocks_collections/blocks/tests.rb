@@ -8,6 +8,20 @@ def assert_equal(expected, actual, message = "")
   end
 end
 
+def assert_raises(expected_exception, message = "", &block)
+  exception = nil
+  begin
+    block.call
+  rescue => e
+    exception = e
+  end
+
+  if exception.is_a?(expected_exception)
+    puts "Тест пройден: #{message}"
+  else
+    raise "Тест не пройден: #{message}\n  Ожидаемое исключение: #{expected_exception}\n  Фактическое исключение: #{exception.class}"
+  end
+end
 
 def test_any
   processor = ArrayProcessor.new([1, 2, 3, 4, 5])
@@ -30,7 +44,7 @@ def test_find_all
 end
 
 def test_find_index
-  processor = ArrayProcessor.new([1, 2, 3, 4, 5])
+  processor = ArrayProcessor.new([1,  2, 3, 4, 5])
   
   result = processor.find_index { |n| n == 3 }
   assert_equal(2, result, "find_index возвращает индекс элемента 3 (индексация с 0)")
@@ -69,11 +83,8 @@ def test_reduce
   result = processor.reduce { |acc, n| acc + n } 
   assert_equal(15, result, "reduce без начального значения возвращает сумму элементов 15")
   
-  begin
+  assert_raises(RuntimeError, "Пустой массив") do
     ArrayProcessor.new([]).reduce { |acc, n| acc + n }
-    raise "Тест не пройден: reduce без начального значения для пустого массива должен выбрасывать исключение"
-  rescue => e
-    puts "Тест пройден: reduce без начального значения для пустого массива выбрасывает исключение"
   end
 end
 
@@ -85,7 +96,6 @@ def run_tests
   test_min_max
   test_none
   test_reduce
-  
 end
 
 run_tests
