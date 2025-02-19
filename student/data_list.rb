@@ -12,12 +12,11 @@ class DataList
     @data.size
   end
 
-
   def all_elements
     @data.dup
   end
 
-  # (a) select(number) — выделить элемент по номеру (номер в 1-индексации).
+  # (a) Выделить элемент по номеру (номер в 1-индексации)
   def select(number)
     index = number - 1
     if index < 0 || index >= @data.size
@@ -27,19 +26,17 @@ class DataList
     self
   end
 
-  # (b) get_selected — получить массив id выделенных элементов (id = индекс + 1).
+  # (b) Получить массив id выделенных элементов (id = порядковый номер, т.е. индекс + 1)
   def get_selected
     @selected_indices.map { |i| i + 1 }
   end
 
-  # (c) get_names — получить массив наименований атрибутов, кроме ID.
+  # (c) Получить массив наименований атрибутов, кроме ID.
   def get_names
     raise NotImplementedError, "Метод get_names должен быть реализован в наследниках"
   end
 
-  # (d) get_data — получить объект DataTable, где первый столбец — сгенерированный номер по порядку,
-  # а остальные столбцы заполнены ВСЕМИ атрибутами сущности, кроме ID.
-  # Этот метод также должен быть реализован в наследниках.
+  # (d) Получить объект DataTable, где 0 столбец – сгенерированный номер по порядку,
   def get_data
     raise NotImplementedError, "Метод get_data должен быть реализован в наследниках"
   end
