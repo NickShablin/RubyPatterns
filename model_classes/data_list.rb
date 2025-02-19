@@ -4,22 +4,25 @@ class DataList
     @selected_indices = []
   end
 
-
   def element(index)
     @data[index]
   end
-
 
   def size
     @data.size
   end
 
-
   def all_elements
     @data.dup
   end
 
-  # (a) select(number) — выделяет элемент по номеру (номер в 1-индексации).
+  # Сеттер для замены массива объектов.
+  def data=(new_array)
+    @data = deep_dup(new_array).freeze
+    @selected_indices = []
+  end
+
+  # (a) Выделить элемент по номеру (номер в 1-индексации)
   def select(number)
     index = number - 1
     if index < 0 || index >= @data.size
@@ -29,18 +32,17 @@ class DataList
     self
   end
 
-  # (b) get_selected — возвращает массив id выделенных элементов (id = индекс + 1).
+  # (b) Получить массив id выделенных элементов (id = индекс + 1)
   def get_selected
     @selected_indices.map { |i| i + 1 }
   end
 
-  # (c) get_names — получить массив наименований атрибутов, кроме ID.
-  # Реализация зависит от сущностей – метод должен быть реализован в наследниках.
+  # (c) Получить массив наименований атрибутов, кроме ID.
   def get_names
     raise NotImplementedError, "Метод get_names должен быть реализован в наследниках"
   end
 
-  # (d) get_data — получить объект DataTable, где первый столбец – сгенерированный номер,
+  # (d) Получить объект DataTable, где первый столбец – сгенерированный номер,
   # а остальные столбцы – атрибуты сущности (без ID).
   def get_data
     raise NotImplementedError, "Метод get_data должен быть реализован в наследниках"
