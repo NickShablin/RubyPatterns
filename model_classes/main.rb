@@ -2,10 +2,11 @@ require_relative 'student'
 require_relative 'student_short'
 require_relative 'data_table'
 require_relative 'data_list'
-require_relative 'data_list_student_short'
+require_relative 'entity_data_list'
 require_relative 'pattern_template_example'
 
 def main
+
   student_string = "1, Иванов, Иван, Иванович, +71234567890, @ivanov, ivanov@gmail.com, https://github.com/ivanov/my_repo.git"
   
   begin
@@ -28,6 +29,7 @@ def main
     puts "Ошибка: #{e.message}"
   end
 
+
   table_data = [
     [1, "Alice", [10, 20], { active: true }],
     [2, "Bob", [30, 40], { active: false }],
@@ -45,6 +47,7 @@ def main
 
   student_short_array = []
   student_short_array << student_short
+
   student_short2 = StudentShort.create_from_student(
     Student.new(
       id: "2",
@@ -59,14 +62,16 @@ def main
   )
   student_short_array << student_short2
 
-  data_list_student_short = DataListStudentShort.new(student_short_array)
-  data_list_student_short.select(1)
-  data_list_student_short.select(2)
-  puts "\nDataListStudentShort:"
-  puts "Выделенные элементы (id): #{data_list_student_short.get_selected.inspect}"
-  puts "Наименования атрибутов: #{data_list_student_short.get_names.inspect}"
-  new_data_table = data_list_student_short.get_data
-  puts "Новый DataTable из DataListStudentShort:"
+
+  attribute_names = ["ФИО", "Git", "Контакт"]
+  entity_data_list = EntityDataList.new(student_short_array, attribute_names)
+  entity_data_list.select(1)
+  entity_data_list.select(2)
+  puts "\nEntityDataList:"
+  puts "Выделенные элементы (id): #{entity_data_list.get_selected.inspect}"
+  puts "Наименования атрибутов: #{entity_data_list.get_names.inspect}"
+  new_data_table = entity_data_list.get_data
+  puts "Новый DataTable, сформированный из EntityDataList:"
   puts "Количество строк: #{new_data_table.rows_count}"
   puts "Количество столбцов: #{new_data_table.cols_count}"
   (0...new_data_table.rows_count).each do |i|
@@ -74,8 +79,6 @@ def main
     puts "Строка #{i}: #{row.inspect}"
   end
 
-  puts "\nПаттерн 'Шаблонный метод' (Template Method) в действии:"
-  # вывод в файле pattern_template_example.rb при его загрузке.
 end
 
 main

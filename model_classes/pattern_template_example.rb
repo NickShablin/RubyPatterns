@@ -3,7 +3,7 @@ class Report
   def generate_report
     data = gather_data        
     formatted_data = format_data(data)  
-    print_report(formatted_data)        
+    print_report(formatted_data)       
   end
 
 
